@@ -10,6 +10,6 @@ Chaque colonne du deuxième au dernier élément correspond à une animation :
 
 **Attention :** 
 
-Le sol fait 16x16 tant dits que les murs et porte font chacun 18x18, pour centrer les murs, il faut simplement les placer 1px plus haut et 1px a gauche du sol correspondant.
+Le sol fait 16x16 tant dits que les murs et porte font chacun 18x18, pour centrer les murs, il faut simplement les placer 1px en haut et 1px à gauche du sol correspondant.
 
 ~~En espérant avoir été clair~~
