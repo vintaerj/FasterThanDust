@@ -1,3 +1,8 @@
+
+##Nuget
+
+obj/
+
 ## Java
 *.class
 .mtj.tmp/
