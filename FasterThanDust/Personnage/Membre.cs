@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace GameJam17.Personnage
@@ -7,5 +8,10 @@ namespace GameJam17.Personnage
 
         private Dictionary<string, int> competences;
         private string nom;
+        private String prenom;
+        
+        
+        
+        
     }
 }

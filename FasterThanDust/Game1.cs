@@ -17,10 +17,14 @@ namespace FasterThanDust
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            graphics.PreferredBackBufferWidth = 1024;
+            graphics.PreferredBackBufferHeight = 552;
+            graphics.ApplyChanges();
             string[,] tab = new string[,]
             {
-                {"1001","1010","1100"},
-                {"0011","1010","0110"}
+                {"1001","1010","1100","0"   ,"1101"},
+                {"0001","1000","0000","1000","0100"},
+                {"0011","0010","0010","0010","0110"}
 
             };
             grid = new Grid(tab);
@@ -58,7 +62,7 @@ namespace FasterThanDust
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            grid.Draw(spriteBatch);
+            grid.Draw(spriteBatch,GraphicsDevice);
             spriteBatch.End();
 
             base.Draw(gameTime);

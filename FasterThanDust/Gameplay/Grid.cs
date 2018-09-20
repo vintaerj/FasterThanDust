@@ -24,6 +24,8 @@ namespace GameJam17.Gameplay
         private Texture2D murBas;
         private Texture2D sol;
         private Texture2D backgroundSol;
+        private Texture2D camion;
+        private Texture2D murSprite;
         
         private int TileWidth = 32;
         private int TileHeight = 32;
@@ -49,8 +51,12 @@ namespace GameJam17.Gameplay
             murDroite = c.Load<Texture2D>("Ressources/Salles/murDroite");
             murBas = c.Load<Texture2D>("Ressources/Salles/murBas");
             sol = c.Load<Texture2D>("Ressources/Salles/sol");
-            //backgroundSol = c.Load<Texture2D>("Ressources/Backgrounds/terre_desolee");
+            backgroundSol = c.Load<Texture2D>("Ressources/Backgrounds/terre_desolee2");
+            camion = c.Load<Texture2D>("Ressources/Vehicules/camion2");
+            murSprite = c.Load<Texture2D>("Ressources/Salles/murSprite");
 
+            OriginX = (g.Viewport.Width / 2) - (camion.Width / 2) + TileWidth;
+            OriginY = (g.Viewport.Height / 2) - (camion.Height / 2) + TileHeight/2 + 8;
 
         }
 
@@ -58,30 +64,18 @@ namespace GameJam17.Gameplay
         public void Update(GameTime gameTime)
         {
             
-            MouseState ms = Mouse.GetState();
-            if (ms.RightButton == ButtonState.Pressed)
-            {
-                Console.WriteLine("pressed");
-                changeCase(ms.X,ms.Y,0);
-            }else if (ms.LeftButton == ButtonState.Pressed)
-            {
-                Console.WriteLine("pressed");
-                changeCase(ms.X,ms.Y,1);
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.S))
-            {
-                isDrawChemin = true;
-            }
+          
+            
 
         }
 
         // dessine le sol .
-        private void DrawGrid(SpriteBatch sp)
+        private void DrawGrid(SpriteBatch sp,GraphicsDevice gd)
         {
 
             // dessiner le background sol;
-            //sp.Draw(backgroundSol,new Rectangle(0,0,1024,768),Color.White);
+            sp.Draw(backgroundSol,new Rectangle(0,0,backgroundSol.Width,backgroundSol.Height),Color.White);
+            sp.Draw(camion,new Rectangle(gd.Viewport.Width/2 - camion.Width/2,gd.Viewport.Height/2 - camion.Height/2,camion.Width ,camion.Height),Color.White);
           
             for (int line = 0; line < grid.GetLength(0) ; line++)
             {
@@ -133,13 +127,12 @@ namespace GameJam17.Gameplay
       
 
         // Dessine .
-        public void Draw(SpriteBatch sp)
+        public void Draw(SpriteBatch sp,GraphicsDevice gd)
         {
 
-            DrawGrid(sp);
+            DrawGrid(sp,gd);
             if (isDrawChemin)
             {
-                Console.WriteLine("Ready");
                 DrawChemin(sp,new Vector2(0,0),new Vector2(2,1));
             }
            
@@ -165,41 +158,8 @@ namespace GameJam17.Gameplay
 
         }
 
-        // Change une case .
-        public void changeCase(double positionX,double positionY,int valeur)
-        {
-            int line = (int)Math.Floor((positionY- OriginY) / TileHeight );
-            int column = (int)Math.Floor((positionX-OriginX) / TileWidth );
-            Console.WriteLine(line+"  "+column);
-           
-            
-            
-            if (line >= 0 && column >= 0 && line < grid.GetLength(0) && column < grid.GetLength(1))
-            {
-                //grid[line, column] = valeur;
-            }
-            
-        }
+       
 
-        // recupere Id.
-        public int GetId(Vector2 v)
-        {
-            float positionX = v.X - OriginX;
-            float positionY = v.Y - OriginY;
-            int line = (int)Math.Floor(positionY / TileHeight);
-            int column = (int)Math.Floor(positionX / TileWidth);
-
-            Noeud n = graph.getNoeud(new Vector2(column, line));
-            if (n != null)
-            {
-                return n.Indice;
-            }
-            else
-            {
-                return -1;
-            }
-         
-        }
         
     }
 }
