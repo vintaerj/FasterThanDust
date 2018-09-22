@@ -76,7 +76,8 @@ namespace GameJam17.Gameplay
             // dessiner le background sol;
             sp.Draw(backgroundSol,new Rectangle(0,0,backgroundSol.Width,backgroundSol.Height),Color.White);
             sp.Draw(camion,new Rectangle(gd.Viewport.Width/2 - camion.Width/2,gd.Viewport.Height/2 - camion.Height/2,camion.Width ,camion.Height),Color.White);
-          
+            sp.Draw(murSprite,new Rectangle(0,0,16,16),Color.White);
+            
             for (int line = 0; line < grid.GetLength(0) ; line++)
             {
                 for (int column = 0; column< grid.GetLength(1); column++)
@@ -89,18 +90,21 @@ namespace GameJam17.Gameplay
                         
                         sp.Draw(sol,new Rectangle(OriginX+column*TileWidth,OriginY+line*TileHeight,32,32),Color.White);
                 
-                        if (id[0] == '1' || id[0] == '2'  )// haut
+                        if (id[0] == '1')// haut
                         {
                             sp.Draw(murHaut,new Rectangle(OriginX+column*TileWidth,OriginY+line*TileHeight-3,TileWidth,TileHeight),Color.White);
                         }
+
+                        
                         if (id[1] == '1' || id[1] == '2') // droite
                         {
                             sp.Draw(murDroite,new Rectangle(OriginX+column*TileWidth,OriginY+line*TileHeight,TileWidth,TileHeight),Color.White);
                         }
-                        if (id[2] == '1' || id[2] == '2') // bas
+                        if (id[2] == '1' ) // bas
                         {
                             sp.Draw(murBas,new Rectangle(OriginX+column*TileWidth,OriginY+line*TileHeight+3,TileWidth,TileHeight),Color.White);
                         }
+                        
                         
                         if (id[3] == '1' || id[3] == '2') // Gauche
                         {
