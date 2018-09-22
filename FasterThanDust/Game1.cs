@@ -55,6 +55,8 @@ namespace FasterThanDust
             animation = new Animation(texture,4);
             animationManager = new AnimationManager(animation);
             animationManager.Play(animation);
+            
+            
           
             grid.Load(GraphicsDevice,this.Content);
             // TODO: use this.Content to load your game content here
