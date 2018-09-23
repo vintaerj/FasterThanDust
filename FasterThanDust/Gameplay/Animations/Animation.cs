@@ -11,25 +11,35 @@ namespace GameJam17.Gameplay.Animations
         
         public int FrameHeight
         {
-            get { return Texture.Height; }
+            get { return Texture.Height / FrameCount; }
         }
         
         public float FrameSpeed { get; set; }
         
         public int FrameWidth
         {
-            get { return Texture.Width / FrameCount; }
+            get { return Texture.Width / (FrameCount -1); }
         }
         
         public bool IsLooping { get; set; }
         
         public Texture2D Texture { get; private set; }
 
-        public Animation(Texture2D texture, int frameCount)
+        public OrientationSprite Orientation;
+
+        public int Curseur;
+
+        public Animation(Texture2D texture, int frameCount,OrientationSprite orientation,int curseur)
         {
             Texture = texture;
 
             FrameCount = frameCount;
+
+            CurrentFrame = 0;
+
+            Orientation = orientation;
+
+            Curseur = curseur;
 
             IsLooping = true;
 

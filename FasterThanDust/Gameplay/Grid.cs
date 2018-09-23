@@ -6,6 +6,7 @@ using System.Numerics;
 using System.Reflection.Metadata.Ecma335;
 using System.Threading;
 using AlgoStar.Boost;
+using GameJam17.Gameplay.Animations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -18,14 +19,14 @@ namespace GameJam17.Gameplay
     {
         public Graph graph;
         public string[,] grid;
-        private Texture2D murGauche;
-        private Texture2D murHaut;
-        private Texture2D murDroite;
-        private Texture2D murBas;
         private Texture2D sol;
         private Texture2D backgroundSol;
         private Texture2D camion;
         private Texture2D murSprite;
+       
+
+        private Dictionary<String, Animation> _animations;
+        private List<AnimationManager>[,] _animationsManagers;
         
         private int TileWidth = 32;
         private int TileHeight = 32;
@@ -38,6 +39,98 @@ namespace GameJam17.Gameplay
         {
             this.grid = grid;
             graph = Graph.TabToGraph(grid);
+           
+        }
+
+        public void initAnimation()
+        {
+            
+            _animationsManagers = new List<AnimationManager>[grid.GetLength(0),grid.GetLength(1)];
+            for (int line = 0; line < _animationsManagers.GetLength(0); line++)
+            {
+                for (int column = 0; column < _animationsManagers.GetLength(1); column++)
+                {
+                    
+                    char[] id = Graph.convertId(grid[line, column]);
+                   
+                    List<AnimationManager> listeAnimationManager = new List<AnimationManager>(4);
+                    Animation animation = null;
+                    AnimationManager animationManager = null;
+                     
+                    
+                  
+                   
+                    
+                    if (id.Length > 1 ) // je vérifie que l'id est bien composé et non un seul 0 .
+                    {
+                        
+                        
+                
+                        if (id[0] == '1' || id[0] == '2')// haut
+                        {
+                            animation = new Animation(murSprite, 5, OrientationSprite.Verticale, 2);
+                            animation.IsLooping = false;
+                            animationManager = new AnimationManager(animation,
+                                new Microsoft.Xna.Framework.Vector2(OriginX + column * TileWidth,
+                                    OriginY + line * TileHeight));
+                            if (id[0] == '2')
+                            {
+                               
+                                animation.CurrentFrame = 1;
+                                animationManager.Play(animation);
+                                animationManager.BeginFrame = 1;
+
+                            }
+                            
+                              
+                           
+                           
+                           listeAnimationManager.Add(animationManager);
+                        }
+
+                        
+                        if (id[1] == '1' || id[1] == '2') // droite
+                        {
+                            animation = new Animation(murSprite, 5, OrientationSprite.Verticale, 3);
+                            if (id[1] == '2')
+                            {
+                               
+                                animation.CurrentFrame = 1;
+                            }
+                            listeAnimationManager.Add(new AnimationManager(animation,new Microsoft.Xna.Framework.Vector2(OriginX+column*TileWidth,OriginY+line*TileHeight)));
+                        }
+                        if (id[2] == '1' || id[2] == '2' ) // bas
+                        {
+                            animation = new Animation(murSprite, 5, OrientationSprite.Verticale, 1);
+                            if (id[2] == '2')
+                            {
+                               
+                                animation.CurrentFrame = 1;
+                            }
+                            listeAnimationManager.Add(new AnimationManager(animation,new Microsoft.Xna.Framework.Vector2(OriginX+column*TileWidth,OriginY+line*TileHeight)));
+                        }
+                        
+                        
+                        if (id[3] == '1' || id[3] == '2') // Gauche
+                        {
+                            animation = new Animation(murSprite, 5, OrientationSprite.Verticale, 0);
+                            if (id[3] == '2')
+                            {
+                                animation.CurrentFrame = 1;
+                            }
+                            listeAnimationManager.Add(new AnimationManager(animation,new Microsoft.Xna.Framework.Vector2(OriginX+column*TileWidth,OriginY+line*TileHeight)));
+                        }
+                        
+                        
+                    }
+                    
+                    _animationsManagers[line,column] = listeAnimationManager;
+                    
+
+                }
+            }
+
+
         }
 
       
@@ -45,18 +138,27 @@ namespace GameJam17.Gameplay
         // Chargement des images.
         public void Load(GraphicsDevice g,ContentManager c)
         {
+            
+            murSprite = c.Load<Texture2D>("Ressources/Salles/murSprite36x36");
+            
           
-            murGauche = c.Load<Texture2D>("Ressources/Salles/murGauche");
-            murHaut = c.Load<Texture2D>("Ressources/Salles/murHaut");
-            murDroite = c.Load<Texture2D>("Ressources/Salles/murDroite");
-            murBas = c.Load<Texture2D>("Ressources/Salles/murBas");
+            
+             
             sol = c.Load<Texture2D>("Ressources/Salles/sol");
             backgroundSol = c.Load<Texture2D>("Ressources/Backgrounds/terre_desolee2");
             camion = c.Load<Texture2D>("Ressources/Vehicules/camion2");
-            murSprite = c.Load<Texture2D>("Ressources/Salles/murSprite");
-
+            
+            
             OriginX = (g.Viewport.Width / 2) - (camion.Width / 2) + TileWidth;
             OriginY = (g.Viewport.Height / 2) - (camion.Height / 2) + TileHeight/2 + 8;
+            
+            initAnimation();
+            
+          
+         
+            
+
+            
 
         }
 
@@ -64,7 +166,24 @@ namespace GameJam17.Gameplay
         public void Update(GameTime gameTime)
         {
             
-          
+            for (int line = 0; line < _animationsManagers.GetLength(0); line++)
+            {
+                for (int column = 0; column < _animationsManagers.GetLength(1); column++)
+                {
+
+                
+                    List<AnimationManager> animationManagers = _animationsManagers[line, column];
+                    foreach (var a in animationManagers)
+                    {
+                        a.Update(gameTime);
+                    }
+                    
+                    
+
+
+
+                }
+            }
             
 
         }
@@ -76,50 +195,27 @@ namespace GameJam17.Gameplay
             // dessiner le background sol;
             sp.Draw(backgroundSol,new Rectangle(0,0,backgroundSol.Width,backgroundSol.Height),Color.White);
             sp.Draw(camion,new Rectangle(gd.Viewport.Width/2 - camion.Width/2,gd.Viewport.Height/2 - camion.Height/2,camion.Width ,camion.Height),Color.White);
-            sp.Draw(murSprite,new Rectangle(0,0,16,16),Color.White);
             
-            for (int line = 0; line < grid.GetLength(0) ; line++)
+            
+            for (int line = 0; line < _animationsManagers.GetLength(0); line++)
             {
-                for (int column = 0; column< grid.GetLength(1); column++)
+                for (int column = 0; column < _animationsManagers.GetLength(1); column++)
                 {
-                    char[] id = Graph.convertId(grid[line, column]);
-                 
-          
-                    if (id.Length > 1 ) // je vérifie que l'id est bien composé et non un seul 0 .
-                    {
-                        
-                        sp.Draw(sol,new Rectangle(OriginX+column*TileWidth,OriginY+line*TileHeight,32,32),Color.White);
-                
-                        if (id[0] == '1')// haut
-                        {
-                            sp.Draw(murHaut,new Rectangle(OriginX+column*TileWidth,OriginY+line*TileHeight-3,TileWidth,TileHeight),Color.White);
-                        }
 
-                        
-                        if (id[1] == '1' || id[1] == '2') // droite
-                        {
-                            sp.Draw(murDroite,new Rectangle(OriginX+column*TileWidth,OriginY+line*TileHeight,TileWidth,TileHeight),Color.White);
-                        }
-                        if (id[2] == '1' ) // bas
-                        {
-                            sp.Draw(murBas,new Rectangle(OriginX+column*TileWidth,OriginY+line*TileHeight+3,TileWidth,TileHeight),Color.White);
-                        }
-                        
-                        
-                        if (id[3] == '1' || id[3] == '2') // Gauche
-                        {
-                            sp.Draw(murGauche,new Rectangle(OriginX+column*TileWidth,OriginY+line*TileHeight,TileWidth,TileHeight),Color.White);
-                        }
-                        
-                        
+                    sp.Draw(sol,new Rectangle(OriginX+column*TileWidth,OriginY+line*TileHeight,TileWidth,TileHeight),Color.White);
+                    List<AnimationManager> animationManagers = _animationsManagers[line, column];
+                    foreach (var a in animationManagers)
+                    {
+                        a.Draw(sp);
                     }
-                   
-                   
-                   
                     
-           
+                    
+
+
+
                 }
             }
+
            
                 
                
