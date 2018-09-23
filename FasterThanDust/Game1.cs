@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using GameJam17.Gameplay;
 using GameJam17.Gameplay.Animations;
 using Microsoft.Xna.Framework;
@@ -12,6 +13,8 @@ namespace FasterThanDust
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         private Grid grid;
+        Sprite sprite ;
+
      
         
 
@@ -25,13 +28,14 @@ namespace FasterThanDust
             graphics.ApplyChanges();
             string[,] tab = new string[,]
             {
-                {"2111","1111","1111","1111","1111","1111","1111","1111","1111"},
-                {"1111","1111","1111","1111","1111","1111","1111","1111","1111"},
+                {"2001","1100","1111","1111","1111","1111","1111","1111","1111"},
+                {"0011","0010","1112","1111","1111","1111","1111","1111","1111"},
                 {"1111","1111","1111","1111","1111","1111","1111","1111","1111"}
              
 
             };
             grid = new Grid(tab);
+           
             
           
             
@@ -51,7 +55,7 @@ namespace FasterThanDust
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
           
-          
+            sprite = new Sprite(Content.Load<Texture2D>("Ressources/Vehicules/Mfp/poursuit"));
             
             
           
@@ -67,6 +71,7 @@ namespace FasterThanDust
 
             // TODO: Add your update logic here
             grid.Update(gameTime);
+            sprite.Update(gameTime);
            
       
 
@@ -80,7 +85,7 @@ namespace FasterThanDust
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             grid.Draw(spriteBatch,GraphicsDevice);
-          
+            sprite.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);

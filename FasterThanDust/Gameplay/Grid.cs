@@ -23,6 +23,9 @@ namespace GameJam17.Gameplay
         private Texture2D backgroundSol;
         private Texture2D camion;
         private Texture2D murSprite;
+
+        private int x = 0;
+        private int y = 0;
        
 
         private Dictionary<String, Animation> _animations;
@@ -69,7 +72,7 @@ namespace GameJam17.Gameplay
                         if (id[0] == '1' || id[0] == '2')// haut
                         {
                             animation = new Animation(murSprite, 5, OrientationSprite.Verticale, 2);
-                            animation.IsLooping = false;
+                            animation.IsLooping = true;
                             animationManager = new AnimationManager(animation,
                                 new Microsoft.Xna.Framework.Vector2(OriginX + column * TileWidth,
                                     OriginY + line * TileHeight));
@@ -92,33 +95,51 @@ namespace GameJam17.Gameplay
                         if (id[1] == '1' || id[1] == '2') // droite
                         {
                             animation = new Animation(murSprite, 5, OrientationSprite.Verticale, 3);
+                            animation.IsLooping = true;
+                            animationManager = new AnimationManager(animation,
+                                new Microsoft.Xna.Framework.Vector2(OriginX + column * TileWidth,
+                                    OriginY + line * TileHeight));
                             if (id[1] == '2')
                             {
-                               
                                 animation.CurrentFrame = 1;
+                                animationManager.Play(animation);
+                                animationManager.BeginFrame = 1;
                             }
-                            listeAnimationManager.Add(new AnimationManager(animation,new Microsoft.Xna.Framework.Vector2(OriginX+column*TileWidth,OriginY+line*TileHeight)));
+                            listeAnimationManager.Add(animationManager);
                         }
                         if (id[2] == '1' || id[2] == '2' ) // bas
                         {
                             animation = new Animation(murSprite, 5, OrientationSprite.Verticale, 1);
+                            animation.IsLooping = true;
+                            animationManager = new AnimationManager(animation,
+                                new Microsoft.Xna.Framework.Vector2(OriginX + column * TileWidth,
+                                    OriginY + line * TileHeight));
                             if (id[2] == '2')
                             {
+                              
                                
                                 animation.CurrentFrame = 1;
+                                animationManager.Play(animation);
+                                animationManager.BeginFrame = 1;
                             }
-                            listeAnimationManager.Add(new AnimationManager(animation,new Microsoft.Xna.Framework.Vector2(OriginX+column*TileWidth,OriginY+line*TileHeight)));
+                            listeAnimationManager.Add(animationManager);
                         }
                         
                         
                         if (id[3] == '1' || id[3] == '2') // Gauche
                         {
                             animation = new Animation(murSprite, 5, OrientationSprite.Verticale, 0);
+                            animation.IsLooping = true;
+                            animationManager = new AnimationManager(animation,
+                                new Microsoft.Xna.Framework.Vector2(OriginX + column * TileWidth,
+                                    OriginY + line * TileHeight));
                             if (id[3] == '2')
                             {
                                 animation.CurrentFrame = 1;
+                                animationManager.Play(animation);
+                                animationManager.BeginFrame = 1;
                             }
-                            listeAnimationManager.Add(new AnimationManager(animation,new Microsoft.Xna.Framework.Vector2(OriginX+column*TileWidth,OriginY+line*TileHeight)));
+                            listeAnimationManager.Add(animationManager);
                         }
                         
                         
