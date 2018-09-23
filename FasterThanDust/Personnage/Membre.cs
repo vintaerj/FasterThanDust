@@ -8,10 +8,23 @@ namespace GameJam17.Personnage
 
         private Dictionary<string, int> competences;
         private string nom;
-        private String prenom;
-        
-        
-        
-        
+        private int vie;
+
+        public Membre(string nom)
+        {
+            this.nom = nom;
+            vie = 100;
+            competences = new Dictionary<string, int>();
+        }
+
+        public int getVie()
+        {
+            return vie;
+        }
+
+        public void setVie(int v)
+        {
+            vie = v;
+        }
     }
 }
