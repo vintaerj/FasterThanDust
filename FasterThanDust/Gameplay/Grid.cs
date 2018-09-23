@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Mime;
-using System.Numerics;
+
 using System.Reflection.Metadata.Ecma335;
 using System.Threading;
 using AlgoStar.Boost;
@@ -33,8 +33,8 @@ namespace GameJam17.Gameplay
         
         private int TileWidth = 32;
         private int TileHeight = 32;
-        private int OriginX = 100;
-        private int OriginY = 100;
+        public int OriginX = 100;
+        public int OriginY = 100;
         private bool isDrawChemin = false;
         
 
@@ -252,32 +252,12 @@ namespace GameJam17.Gameplay
         {
 
             DrawGrid(sp,gd);
-            if (isDrawChemin)
-            {
-                DrawChemin(sp,new Vector2(0,0),new Vector2(2,1));
-            }
+           
            
   
         }
 
-        // Desinne le chemin d'un point A à B
-        private void DrawChemin(SpriteBatch sp,System.Numerics.Vector2 depart, System.Numerics.Vector2 fin)
-        {
-            graph = Graph.TabToGraph(grid);
-            Noeud d = graph.getNoeud(depart);
-            Noeud f = graph.getNoeud(fin);
-            List<Noeud> chemins = graph.rechercherChemin(d, f);
-            
-            
-            
-            foreach (var n in chemins)
-            {
-                Rectangle rect =new Rectangle(OriginX+(int)n.Position.X*TileWidth,OriginY+(int)n.Position.Y*TileHeight,TileWidth,TileHeight);
-                sp.Draw(sol,rect,Color.Green);
-                
-            }
-
-        }
+       
 
        
 

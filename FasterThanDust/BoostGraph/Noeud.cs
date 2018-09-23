@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace AlgoStar.Boost
 {

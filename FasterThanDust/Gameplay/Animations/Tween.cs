@@ -43,8 +43,8 @@ namespace GameJam17.Gameplay.Animations
                 if (Time < Duration)
                 {
                     Time += (float) gameTime.ElapsedGameTime.TotalSeconds;
-                    Tweening.X = EaseInSin(Time, Position.X, Distance.X, Duration);
-                    Tweening.Y = EaseInSin(Time, Position.Y, Distance.Y, Duration);
+                    Tweening.X = Linear(Time, Position.X, Distance.X, Duration);
+                    Tweening.Y = Linear(Time, Position.Y, Distance.Y, Duration);
 
                 }
                 else
@@ -70,6 +70,12 @@ namespace GameJam17.Gameplay.Animations
         {
             
             return -distance * (float)Math.Cos(time / duration * (Math.PI / 2)) + distance + value;
+        }
+        
+        public static float Linear(float time,float value,float distance,float duration)
+        {
+           
+            return distance*time/duration + value;
         }
         
       

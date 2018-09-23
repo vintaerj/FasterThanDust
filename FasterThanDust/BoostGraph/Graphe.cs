@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 using System.Reflection.Metadata.Ecma335;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace AlgoStar.Boost
 {
@@ -370,6 +371,22 @@ namespace AlgoStar.Boost
 
             res.Reverse();
             return res;
+        }
+
+        public List<Vector2> RetrievePath(Noeud noeudDepart,Noeud noeudFinal,int originX,int originY)
+        {
+            List<Vector2> listeVector = new List<Vector2>();
+            List<Noeud> listeNoeuds = rechercherChemin(noeudDepart, noeudFinal);
+            foreach (var n in listeNoeuds)
+            {
+                Vector2 v = n.Position;
+                v.X = originX + v.X * 32;
+                v.Y = originY + v.Y * 32;
+                listeVector.Add(v);
+                
+            }
+
+            return listeVector;
         }
         
         

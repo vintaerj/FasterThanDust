@@ -12,13 +12,13 @@ namespace GameJam17.Gameplay.Animations
     public class Sprite
     {
 
-        private Vector2 Position;
+        public Vector2 Position { get; set; }
 
         public AnimationManager AnimationManager { get; set; }
 
         public Texture2D Texture { get; set; }
         
-        public float Speed { get; set; }
+        protected float Speed { get; set; }
 
         public Tween Tween;
 
@@ -35,10 +35,12 @@ namespace GameJam17.Gameplay.Animations
 
         public Sprite(Texture2D texture)
         {
+           
             Texture = texture;
             IsMoving = false;
-            Tween = new Tween(0,Position,new Vector2(0,0),2);
+            Tween = new Tween(0,Position,new Vector2(0,0),1);
             Path = new Path(new List<Vector2>());
+          
            
             
 
@@ -50,12 +52,16 @@ namespace GameJam17.Gameplay.Animations
             
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
-            if(Keyboard.GetState(PlayerIndex.One).IsKeyDown(Keys.K))
+            if (Keyboard.GetState(PlayerIndex.One).IsKeyDown(Keys.K))
+            {
                 launchPath();
+                Console.WriteLine("K");
+            }
+               
             
-            Console.WriteLine(Path.IsPathing);
+          
           
            UpdatePath(gameTime);
 
@@ -63,7 +69,7 @@ namespace GameJam17.Gameplay.Animations
         
         public virtual void Draw(SpriteBatch sp)
         {
-            sp.Draw(Texture,Position,new Rectangle(0,0,Texture.Width,Texture.Height),Color.White);
+            sp.Draw(Texture,Position,new Rectangle(0,0,Texture.Width,Texture.Height),Color.Green);
         }
 
         public void Move(Vector2 dest)
@@ -75,7 +81,8 @@ namespace GameJam17.Gameplay.Animations
             {
                 Tween.Reset();
                 Tween.Position = Position;
-                Tween.Distance = dest;
+                Vector2 dist = new Vector2(Math.Abs(Position.X - dest.X),Math.Abs(Position.Y - dest.Y));
+                Tween.Distance = dist;
                 Tween.IsRunning = true;
                 IsMoving = true;
 
@@ -84,10 +91,14 @@ namespace GameJam17.Gameplay.Animations
 
         }
 
-        public void UpdatePath(GameTime gameTime)
+        public virtual void UpdatePath(GameTime gameTime)
         {
             Tween.Update(gameTime);
-            Position = Tween.Tweening;
+            if (IsMoving)
+            {
+                Position = Tween.Tweening;
+            }
+          
             
             
             
@@ -101,7 +112,7 @@ namespace GameJam17.Gameplay.Animations
                     
                 }
                   
-                
+            
             }
             
             
@@ -117,13 +128,17 @@ namespace GameJam17.Gameplay.Animations
      
          }
 
-        public void SetPath(List<Vector2> l)
+        public virtual void SetPath(List<Vector2> l)
         {
             Path.Positions = l;
         }
 
         public void launchPath()
         {
+            foreach (var p in Path.Positions)
+            {
+                Console.WriteLine(p);
+            }
             Path.IsPathing = true;
         }
 
