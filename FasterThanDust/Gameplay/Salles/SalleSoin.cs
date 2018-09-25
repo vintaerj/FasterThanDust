@@ -20,6 +20,7 @@ namespace GameJam17.Gameplay.Salles
 
         public override void upgrade()
         {
+            niveau += 1;
             regenPerSecond += 5;
         }
 

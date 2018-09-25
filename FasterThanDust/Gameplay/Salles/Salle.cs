@@ -5,7 +5,8 @@ namespace GameJam17.Gameplay.Salles
 {
     public abstract class Salle
     {
-        private int taille;
+        protected int niveau;
+        protected int taille;
         protected List<Membre> lesMembres;
         
 
@@ -15,7 +16,7 @@ namespace GameJam17.Gameplay.Salles
             lesMembres = new List<Membre>();
         }
 
-        abstract public void upgrade();
+        public abstract void upgrade();
 
         public void addMembre(Membre m)
         {

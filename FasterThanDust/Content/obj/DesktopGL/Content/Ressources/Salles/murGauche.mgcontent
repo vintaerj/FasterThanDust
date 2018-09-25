@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/jorda/workspace/C#/FasterThanDust/FasterThanDust/Content/Ressources/Salles/murGauche.png</SourceFile>
-  <SourceTime>2018-09-20T14:43:32.438747+02:00</SourceTime>
-  <DestFile>C:/Users/jorda/workspace/C#/FasterThanDust/FasterThanDust/Content/bin/DesktopGL/Content/Ressources/Salles/murGauche.xnb</DestFile>
-  <DestTime>2018-09-20T17:13:34.2010207+02:00</DestTime>
+  <SourceFile>C:/Users/tabouler/RiderProjects/FasterThanDust/FasterThanDust/Content/Ressources/Salles/murGauche.png</SourceFile>
+  <SourceTime>2018-09-23T10:58:03.8684571+02:00</SourceTime>
+  <DestFile>C:/Users/tabouler/RiderProjects/FasterThanDust/FasterThanDust/Content/bin/DesktopGL/Content/Ressources/Salles/murGauche.xnb</DestFile>
+  <DestTime>2018-09-23T11:01:48.9953336+02:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2018-01-13T19:18:24+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
